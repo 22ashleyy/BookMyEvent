@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block navbar_class %}
+bg-light
+{% endblock %}
+{% block content %}
+<section id="about-us" class="about-us section">
+  <div class="container">
+    <!-- Header -->
+    <div class="text-center mb-5" data-aos="fade-down">
+      <h2 class="section-title">About Us</h2>
+      <p class="section-subtitle">Your gateway to unforgettable experiences</p>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="row align-items-center">
+      <!-- Image Section -->
+      <div class="col-md-6" data-aos="fade-right">
+        <div class="about-img-wrapper">
+          <img src="{% static 'images/bookmyevent.webp' %}" alt="About Us" class="about-img" />
+          <div class="mission-tag">Our Mission</div>
+        </div>
+      </div>
+
+      <!-- Text Section -->
+      <div class="col-md-6" data-aos="fade-left">
+        <div class="about-content">
+          <p class="highlight">
+            “We bring people together through the power of shared moments.”
+          </p>
+          <p>
+            We aim to make discovering, choosing, and attending events simple, exciting, and safe. With verified events, secure payments, and exclusive offers, we ensure your experience is seamless and stress-free.
+          </p>
+          <ul class="features">
+            <li><i class="bi bi-shield-lock-fill"></i> Secure Payments</li>
+            <li><i class="bi bi-star-fill"></i> Exclusive Deals</li>
+            <li><i class="bi bi-check-circle-fill"></i> Verified Events</li>
+            <li><i class="bi bi-heart-fill"></i> Personalized Recommendations</li>
+          </ul>
+          <a href="{% url 'index' %}" class="btn explore-btn">Explore Events</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

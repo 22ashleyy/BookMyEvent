@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block navbar_class %}
+bg-light
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Admin Dashboard</h1>
+
+    <!-- Overview Cards -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Events</h5>
+                    <p class="card-text display-4">{{ total_events }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Upcoming Events</h5>
+                    <p class="card-text display-4">{{ upcoming_events_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Recent User Activity</h5>
+                    <p class="card-text display-4">{{ recent_activity_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div class="row mt-5">
+        <div class="col-md-3">
+            <ul class="nav flex-column nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#events">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#users">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#settings">Settings</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <!-- Event Management -->
+            <section id="events">
+                <h2>Event Management</h2>
+
+                <!-- Add Event -->
+                <h3>Add Event</h3>
+                <form method="post" class="mb-4" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.title }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.image }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.amount }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.category }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.date }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.description }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.status }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Event</button>
+                </form>
+
+                <!-- View Events -->
+                <h3>View Events</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in events %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ event.title }}</td>
+                                <td>{{ event.date }}</td>
+                                <td>{{ event.status }}</td>
+                                <td>
+                                    <a href="" class="btn btn-warning btn-sm">Edit</a>
+                                    {% if events.event_id %}
+                                        <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
+                                    {% else %}
+                                        <p>No ID</p>  <!-- This will help identify events with no ID -->
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No events found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- User Management -->
+            <section id="users">
+                <h2>User Management</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.role }}</td>
+                                <td>
+                                    <a href="/promote/{{ user.id }}/" class="btn btn-success btn-sm">Promote</a>
+                                    <a href="{ % url 'delete_event' %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No users found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Basic Settings -->
+            <section id="settings">
+                <h2>Basic Settings</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="site_title" class="form-label">Site Title</label>
+                        <input type="text" id="site_title" name="site_title" class="form-control" value="{{ site_title }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact_email" class="form-label">Contact Email</label>
+                        <input type="email" id="contact_email" name="contact_email" class="form-control" value="{{ contact_email }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="footer_text" class="form-label">Footer Text</label>
+                        <textarea id="footer_text" name="footer_text" class="form-control" rows="2">{{ footer_text }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

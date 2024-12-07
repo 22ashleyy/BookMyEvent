@@ -1,0 +1,121 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block navbar_class %}
+header-transparent
+{% endblock %}
+{% block content %}
+      <section id="hero" class="hero section dark-background">
+        <img src="{% static 'images/audience.jpg'%}" alt="" class="hero-bg">
+
+        <div class="container">
+          <div class="row gy-4 justify-content-between">
+            <div class="col-lg-4 order-lg-last hero-img" data-aos="zoom-out" data-aos-delay="100">
+              <img src="" class="img-fluid animated" alt="">
+            </div>
+
+            <div class="col-lg-6  d-flex flex-column justify-content-center" data-aos="fade-in">
+              <h1>Discover and Book Amazing <span>Events</span></h1>
+              <p>Join our platform to explore, attend, and host incredible events near you.</p>
+              <div class="d-flex">
+                <a href="#about" class="btn-get-started">Get Started</a>
+<!--                <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>-->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="company-scroll">
+          <h3 class="text-center">COLLABORATIONS</h3>
+          <div class="company-track">
+            <img src="{% static 'images/safaricom.png'%}" alt="Company 1">
+            <img src="{% static 'images/eabl.png'%}" alt="Company 2">
+            <img src="{% static 'images/sportpesa.png'%}" alt="Company 3">
+            <img src="{% static 'images/mastercard.png'%}" alt="Company 4">
+          </div>
+      </div>
+      </section>
+<!--tickets highlights-->
+<!-- About Section -->
+<section id="about" class="about section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <!-- Intro Section -->
+    <div class="row justify-content-center text-center">
+      <div class="col-xl-8">
+        <h2>Experience Unforgettable Events With Ease</h2>
+        <p>
+          Our platform connects you with the best events happening near you, offering a seamless ticket-buying experience. From concerts to theater shows, we ensure that every moment is magical. Discover, choose, and secure your spot now!
+        </p>
+      </div>
+    </div>
+    <!-- Event Cards -->
+    <div class="container">
+    <div class="row g-4 mt-4">
+        {% for events in event %}
+        <div class="col-12 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-box">
+                <img src="{{ events.image.url }}" alt="Event Image" class="event-img" />
+                <h3>{{ events.title }}</h3>
+                <p>{{ events.description }}</p>
+                <a href="{% url 'view_event' events.id %}" class="btn buy-ticket">Buy Ticket</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+  </div>
+</section>
+<!--categories-->
+<section id="categories" class="categories section">
+  <div class="container">
+    <h2 class="section-title">Explore Events by Category</h2>
+    <p class="section-subtitle">Find events tailored to your interests</p>
+
+    <!-- Categories -->
+    <div class="category-grid">
+      <div class="category-card" data-aos="fade-up">
+        <div class="category-img-wrapper">
+          <img src="{% static 'images/concerts.jpg' %}" alt="Concerts" class="category-img">
+        </div>
+        <h3>Concerts</h3>
+        <p>Feel the beat and enjoy live music performances.</p>
+        <a href="#" class="btn explore-category">Explore</a>
+      </div>
+      <div class="category-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="category-img-wrapper">
+          <img src="{% static 'images/sports.jpg' %}" alt="Sports" class="category-img">
+        </div>
+        <h3>Sports</h3>
+        <p>Get the adrenaline rush from exciting matches.</p>
+        <a href="#" class="btn explore-category">Explore</a>
+      </div>
+      <div class="category-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="category-img-wrapper">
+          <img src="{% static 'images/theater.jpg' %}" alt="Theater" class="category-img">
+        </div>
+        <h3>Theater</h3>
+        <p>Dive into stories brought to life on stage.</p>
+        <a href="#" class="btn explore-category">Explore</a>
+      </div>
+      <div class="category-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="category-img-wrapper">
+          <img src="{% static 'images/workshop.jpg' %}" alt="Workshops" class="category-img">
+        </div>
+        <h3>Workshops</h3>
+        <p>Learn and grow with hands-on experiences.</p>
+        <a href="#" class="btn explore-category">Explore</a>
+      </div>
+      <div class="category-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="category-img-wrapper">
+          <img src="{% static 'images/family.jpg' %}" alt="Family Events" class="category-img">
+        </div>
+        <h3>Family Events</h3>
+        <p>Perfect events for everyone in the family.</p>
+        <a href="#" class="btn explore-category">Explore</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

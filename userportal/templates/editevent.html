@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block navbar_class %}
+bg-light
+{% endblock %}
+{% block title %}{{ event.title }}{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Edit your Event</h2>
+    <form method="post" enctype="multipart/form-data" class="form-container">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.title }}
+        </div>
+        <div class="mb-3">
+            {{ form.image }}
+        </div>
+        <div class="mb-3">
+            {{ form.amount }}
+        </div>
+        <div class="mb-3">
+            {{ form.date }}
+        </div>
+        <div class="mb-3">
+            {{ form.description }}
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Add Event</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .form-container {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-container .form-control {
+        border-radius: 10px;
+        box-shadow: none;
+        transition: border-color 0.3s;
+    }
+
+    .form-container .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .form-container label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 50px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .text-center {
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
