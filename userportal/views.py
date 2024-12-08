@@ -24,6 +24,9 @@ def registration(request):
     return render(request, 'registration.html')
 
 def dashboard(request):
+    if not request.user.is_staff or request.user.email != 'admin@events.com':
+        return render(request, 'index')
+
     total_events = Event.objects.count()
     upcoming_events_count = Event.objects.filter(status='upcoming').count()
     # recent_activity_count = User.objects.count()  # Placeholder for actual recent activity count
@@ -36,9 +39,9 @@ def dashboard(request):
             return redirect('dashboard')
     else:
         form = eventForm()
-
+    users = User.objects.all()
     return render(request, 'adminstration.html', {'total_events': total_events,
-    'upcoming_events_count': upcoming_events_count, 'form': form, 'events': events})
+    'upcoming_events_count': upcoming_events_count, 'form': form, 'events': events, 'users': users})
 
 def edit_event(request, id):
     event = get_object_or_404(Event, id=id)
@@ -57,13 +60,13 @@ def edit_event(request, id):
         form = eventForm(instance=event)
     return render(request, 'adminstration.html', {'form': form, 'event': event})
 
-def delete_event(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
+def delete_event(request, id):
+    event = get_object_or_404(Event, id=id)
     try:
         event.delete()
-        messages.success(request, 'Event deleted successfully.')
+        messages.success(request, 'Your event has been deleted.')
     except Exception as e:
-        messages.error(request, f'Error deleting event')
+        messages.error(request, 'Your event could not be deleted.')
     return redirect('dashboard')
 
 def events(request):
@@ -79,16 +82,19 @@ def register_view(request):
         username = request.POST.get('username', '')
         email = request.POST.get('email', '')
         password = request.POST.get('password', '')
+        is_staff = request.POST.get('is_staff', '')
 
         if username and email and password:
             user = User.objects.create_user(username=username, email=email, password=password)
+            if is_staff == 'on':
+                user.is_staff = True
             user.save()
             messages.success(request, "Registration successful.")
             return redirect('login')
         else:
             messages.error(request, "All fields are required.")
 
-    return render(request, 'register.html')
+    return render(request, 'registration.html')
 
 def login_view(request):
     if request.method == 'POST':
@@ -100,11 +106,11 @@ def login_view(request):
             return redirect('index')
         else:
             messages.error(request, 'Invalid credentials.')
-    return render(request, 'login.html')
+    return render(request, 'registration.html')
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
 
 @login_required
 def my_tickets(request):

@@ -107,11 +107,7 @@ bg-light
                                 <td>{{ event.status }}</td>
                                 <td>
                                     <a href="" class="btn btn-warning btn-sm">Edit</a>
-                                    {% if events.event_id %}
-                                        <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
-                                    {% else %}
-                                        <p>No ID</p>  <!-- This will help identify events with no ID -->
-                                    {% endif %}
+                                    <a href="{% url 'delete_event' event.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
                                 </td>
                             </tr>
                         {% empty %}
@@ -140,11 +136,11 @@ bg-light
                         {% for user in users %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ user.name }}</td>
+                                <td>{{ user.username }}</td>
                                 <td>{{ user.email }}</td>
-                                <td>{{ user.role }}</td>
+                                <td>{{ "Staff" if user.is_staff else "User" }}</td>
                                 <td>
-                                    <a href="/promote/{{ user.id }}/" class="btn btn-success btn-sm">Promote</a>
+                                    <a href="{% url 'promote_user' user.id %}" class="btn btn-success btn-sm">Promote</a>
                                     <a href="{ % url 'delete_event' %}" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>

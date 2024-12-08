@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {%load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login and Register</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/letterlogo.png' %}">
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
     <style>
         .carousel-item img {
             height: 100vh;
@@ -34,7 +37,7 @@
         </div>
 
         <!-- Right Section: Login and Register Forms -->
-        <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <div class="col-md-6 d-flex align-items-center justify-content-center bg-accent">
             <div class="p-5 w-75">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -51,10 +54,10 @@
                             <img src="{% static 'images/logo.png'%}" alt="Logo" class="mb-3" style="max-width: 150px;">
                             <h2>Log in to your Account</h2>
                         </div>
-                        <div class="text-center mb-3">
-                            <button type="button" class="btn btn-outline-primary btn-block mb-2">Log in with Google</button>
-                            <button type="button" class="btn btn-outline-primary btn-block">Log in with Facebook</button>
-                        </div>
+<!--                        <div class="text-center mb-3">-->
+<!--                            <button type="button" class="btn btn-outline-primary btn-block mb-2">Log in with Google</button>-->
+<!--                            <button type="button" class="btn btn-outline-primary btn-block">Log in with Facebook</button>-->
+<!--                        </div>-->
                         <form method="POST" action="{% url 'login' %}">
                             {% csrf_token %}
                             <div class="form-group">
@@ -72,7 +75,7 @@
                             <div class="d-flex justify-content-between mb-3">
                                 <a href="#" class="text-muted">Forgot Password?</a>
                             </div>
-                            <button type="submit" class="btn btn-outline-primary btn-block">Log in</button>
+                            <button type="submit" class="btn buy-ticket btn-block">Log in</button>
                         </form>
                     </div>
                     <!-- Register Form -->
@@ -85,21 +88,25 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="name">Full Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+                                <input type="text" class="form-control" id="name" name="username" placeholder="Enter your full name">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="register-email" placeholder="Enter your email">
+                                <input type="email" class="form-control" id="register-email" name="email" placeholder="Enter your email">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="register-password" placeholder="Enter your password">
+                                <input type="password" class="form-control" id="register-password" name="password" placeholder="Enter your password">
+                            </div>
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="staff" name="is_staff">
+                                <label class="form-check-label" for="staff">Register as Staff</label>
                             </div>
                             <div class="form-check mb-3">
                                 <input type="checkbox" class="form-check-input" id="terms">
                                 <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button type="submit" class="btn buy-ticket btn-block">Register</button>
                         </form>
                     </div>
                 </div>
