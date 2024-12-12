@@ -33,6 +33,10 @@ html {
 .header.scrolled {
     background-color: #ff851a !important; /* Color on scroll for the index page */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    color: white;
+}
+.header.scrolled ul li a{
+  color: white;
 }
 .buy-ticket {
   display: inline-block;
@@ -145,6 +149,7 @@ html {
     padding: 10px 20px;
     font-size: 15px;
     text-transform: none;
+    color: black;
   }
 
   .navmenu .dropdown ul a i {
@@ -154,6 +159,7 @@ html {
   .navmenu .dropdown ul a:hover,
   .navmenu .dropdown ul .active:hover,
   .navmenu .dropdown ul li:hover>a {
+    color: black;
   }
 
   .navmenu .dropdown:hover>ul {
@@ -252,6 +258,7 @@ html {
   .navmenu .dropdown ul {
     margin: 0;
     padding: 10px 0;
+    background-color: #ff851a;
     display: block;
     position: absolute;
     visibility: hidden;
@@ -272,6 +279,7 @@ html {
     padding: 10px 20px;
     font-size: 15px;
     text-transform: none;
+    color: white;
   }
 
   .navmenu .dropdown ul a i {
@@ -281,6 +289,7 @@ html {
   .navmenu .dropdown ul a:hover,
   .navmenu .dropdown ul .active:hover,
   .navmenu .dropdown ul li:hover>a {
+    color: black;
   }
 
   .navmenu .dropdown:hover>ul {
@@ -370,7 +379,7 @@ html {
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
-    color: #ff851a;
+    color: #ffffff;
   }
 
   .navmenu .active i,

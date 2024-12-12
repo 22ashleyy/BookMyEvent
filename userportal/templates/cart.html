@@ -1,6 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Cart</h1>
-<p>Your cart is currently empty.</p>
+<div class="container mt-5">
+    <h2>Cart</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Event</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ ticket.event.title }}</td>
+                <td>{{ ticket.quantity }}</td>
+                <td> <a href="{% url 'remove_from_cart' ticket.id %}" class="btn btn-danger btn-sm">Remove</a> </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No tickets in your cart.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

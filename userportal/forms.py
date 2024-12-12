@@ -11,7 +11,7 @@ class eventForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Title'}),
             'date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Event Date'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Event Description'}),
-            'amount': forms.Textarea(attrs={'class': 'form-control small-textarea', 'placeholder': 'Event Amount'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control small-textarea', 'placeholder': 'Event Amount'}),
             'status': forms.Select(attrs={'class': 'form-control small-textarea', 'placeholder': 'Event Status'}),
             'image': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Event Image'}),
             'category': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Event Category'}),

@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from userportal.forms import eventForm
-from userportal.models import Event
+from userportal.models import Event, Cart
 
 
 # Create your views here.
@@ -24,9 +24,6 @@ def registration(request):
     return render(request, 'registration.html')
 
 def dashboard(request):
-    if not request.user.is_staff or request.user.email != 'admin@events.com':
-        return render(request, 'index')
-
     total_events = Event.objects.count()
     upcoming_events_count = Event.objects.filter(status='upcoming').count()
     # recent_activity_count = User.objects.count()  # Placeholder for actual recent activity count
@@ -41,7 +38,7 @@ def dashboard(request):
         form = eventForm()
     users = User.objects.all()
     return render(request, 'adminstration.html', {'total_events': total_events,
-    'upcoming_events_count': upcoming_events_count, 'form': form, 'events': events, 'users': users})
+    'upcoming_events_count': upcoming_events_count, 'form': form, 'events': events,'users': users})
 
 def edit_event(request, id):
     event = get_object_or_404(Event, id=id)
@@ -100,23 +97,68 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('index')
-        else:
-            messages.error(request, 'Invalid credentials.')
-    return render(request, 'registration.html')
+        try:
+            user = User.objects.get(email=email)
+            user = authenticate(request, username=user.username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "You are now logged in.")
+                if user.is_staff:
+                    return redirect('dashboard')
+                else:
+                    return redirect('index')
+            else:
+                messages.error(request, "Invalid email or password.")
+        except User.DoesNotExist:
+            messages.error(request, "User does not exist.")
+    return redirect('registration')
 
 def logout_view(request):
     logout(request)
     return redirect('index')
 
-@login_required
-def my_tickets(request):
-    # Add logic to fetch and display user's tickets
-    return render(request, 'my_tickets.html')
-@login_required
+# @login_required
+# def add_to_cart(request, event_id):
+#     event = get_object_or_404(Event, id=event_id)
+#     cart, created = Cart.objects.get_or_create(user=request.user)
+#     ticket, created = Ticket.objects.get_or_create(event=event, user=request.user)
+#     if not created:
+#         ticket.quantity += 1
+#         ticket.save()
+#     else:
+#         cart.tickets.add(ticket)
+#         messages.success(request, 'Ticket added to cart.')
+#         return (redirect('events')
+# @login_required()
 def cart(request):
-    # Add logic to handle cart functionality
-    return render(request, 'cart.html')
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    tickets = cart.tickets.all()
+    return render(request, 'cart.html', {'tickets': tickets})
+# @login_required()
+# def remove_from_cart(request, ticket_id):
+#     cart = get_object_or_404(Cart, user=request.user)
+#     ticket = get_object_or_404(Ticket, id=ticket_id)
+#     cart.tickets.remove(ticket)
+#     messages.success(request, 'Ticket removed from cart.')
+#     return redirect('cart')
+def my_tickets(request):
+    return render(request, 'my_tickets.html')
+
+def edit_event (request, id):
+    event = get_object_or_404(Event, id=id)
+    if request.method == 'POST':
+        form = eventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+
+            if 'image' in request.FILES:
+                file_name = os.path.basename(request.FILES['image'].name)
+                messages.success(request, f'Your event and image have been updated! {file_name} uploaded.')
+            else:
+                messages.success(request, 'Your event has been updated successfully!.')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Please correct the highlighted errors.')
+    else:
+        form = eventForm(instance=event)
+    return render(request, 'editevent.html', {'form': form, 'event': event})
