@@ -30,13 +30,15 @@ urlpatterns = [
     path('registration/', views.registration, name='registration'),
     path('events/', views.events, name='all_events'),  # URL for viewing all events
     path('events/<int:event_id>/', views.view_event, name='view_event'),
+    path('events/<int:event_id>/', views.view_event, name='event_detail'),
     path('edit_event/<int:id>/', views.edit_event, name='edit_event'),
     path('delete_event/<int:id>/', views.delete_event, name='delete_event'),
     path('register/', views.register_view, name='register'),
+    path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    # path('add_to_cart/<int:event_id>/', add_to_cart, name='add_to_cart'),
+    path('add_to_cart/<int:id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart, name='cart'),
     path('my_tickets/', views.my_tickets, name='my_tickets'),
-    # path('remove_from_cart/<int:ticket_id>/', remove_from_cart, name='remove_from_cart'),
+    path('remove_from_cart/<int:ticket_id>/', views.remove_from_cart, name='remove_from_cart'),
 ]

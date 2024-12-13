@@ -28,27 +28,25 @@
         <li><a href="{% url 'all_events' %}">Events</a></li>
         <li><a href="{% url 'about' %}">About us</a></li>
           <li><a href="">Categories</a></li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+          </li>
         <li class="dropdown"><a href=""><span>Account</span> <i
               class="bi bi-chevron-down toggle-dropdown"></i></a>
           <ul>
-            {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'my_tickets' %}">My Tickets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cart' %}">Cart</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
-                </li>
+
             </ul>
+            {% else %}
+            <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login/SignUp</a>
+            </li>
             {% endif %}
 
       </ul>

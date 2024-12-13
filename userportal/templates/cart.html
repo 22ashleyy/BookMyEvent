@@ -2,30 +2,62 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Cart</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Event</th>
-            <th>Quantity</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for ticket in tickets %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ ticket.event.title }}</td>
-                <td>{{ ticket.quantity }}</td>
-                <td> <a href="{% url 'remove_from_cart' ticket.id %}" class="btn btn-danger btn-sm">Remove</a> </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4" class="text-center">No tickets in your cart.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h2>Shopping Cart</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Amount</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ ticket.event.title }}</td>
+                        <td>${{ ticket.event.amount|floatformat:2 }}</td>
+                        <td>{{ ticket.quantity }}</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' ticket.id %}" class="btn btn-danger btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No items in your cart.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Cart Total</h5>
+                    <p class="card-text">Subtotal: ${{ subtotal }}</p>
+                    <p class="card-text">Shipping and taxes will be calculated at checkout.</p>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="terms">
+                        <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
+                    </div>
+                    <a href="" class="btn btn-primary btn-block">Proceed to Checkout</a>
+                    <a href="#" class="btn buy-ticket">Pay with Mpesa</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+document.querySelector('.btn-primary').addEventListener('click', function(e) {
+    if (!document.getElementById('terms').checked) {
+        e.preventDefault();
+        alert('Please agree to the terms and conditions before proceeding.');
+    }
+});
+</script>
 {% endblock %}

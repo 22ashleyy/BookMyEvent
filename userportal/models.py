@@ -19,7 +19,7 @@ class Event(models.Model):
     date = models.DateField()
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='upcoming')
-    amount = models.CharField(max_length=10)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='event_images/', blank=True, null=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='concert')
 
@@ -28,7 +28,7 @@ class Event(models.Model):
 class Ticket(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField(default=0)
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

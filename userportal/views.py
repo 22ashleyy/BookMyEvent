@@ -1,4 +1,5 @@
 import os
+from decimal import Decimal
 from lib2to3.fixes.fix_input import context
 
 from django.contrib import messages
@@ -9,7 +10,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from userportal.forms import eventForm
-from userportal.models import Event, Cart
+from userportal.models import Event, Cart, Ticket
 
 
 # Create your views here.
@@ -24,9 +25,12 @@ def registration(request):
     return render(request, 'registration.html')
 
 def dashboard(request):
+    if not request.user.is_staff:
+        return redirect('index')
+
+
     total_events = Event.objects.count()
     upcoming_events_count = Event.objects.filter(status='upcoming').count()
-    # recent_activity_count = User.objects.count()  # Placeholder for actual recent activity count
 
     events = Event.objects.all()
     if request.method == 'POST':
@@ -72,7 +76,8 @@ def events(request):
 
 def view_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
-    return render(request, 'view_event.html', {'event': event})
+    similar_events = Event.objects.filter(category=event.category).exclude(id=event.id)
+    return render(request, 'view_event.html', {'event': event, 'similar_events': similar_events})
 
 def register_view(request):
     if request.method == 'POST':
@@ -116,31 +121,44 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+def delete_user(request, user_id):
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        if user.is_superuser:
+            messages.error(request, "You can't delete superusers.")
+        else:
+            user.delete()
+            messages.success(request, "User has been deleted.")
+    return redirect('dashboard')
 
-# @login_required
-# def add_to_cart(request, event_id):
-#     event = get_object_or_404(Event, id=event_id)
-#     cart, created = Cart.objects.get_or_create(user=request.user)
-#     ticket, created = Ticket.objects.get_or_create(event=event, user=request.user)
-#     if not created:
-#         ticket.quantity += 1
-#         ticket.save()
-#     else:
-#         cart.tickets.add(ticket)
-#         messages.success(request, 'Ticket added to cart.')
-#         return (redirect('events')
-# @login_required()
+@login_required
+def add_to_cart(request, id):
+    event = get_object_or_404(Event, id=id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    ticket, created = Ticket.objects.get_or_create(event=event, user=request.user)
+    if not created:
+        ticket.quantity += 1
+        ticket.save()
+    else:
+        cart.tickets.add(ticket)
+
+    messages.success(request, 'Ticket added to cart.')
+    return redirect('index')
+
+@login_required()
 def cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     tickets = cart.tickets.all()
-    return render(request, 'cart.html', {'tickets': tickets})
-# @login_required()
-# def remove_from_cart(request, ticket_id):
-#     cart = get_object_or_404(Cart, user=request.user)
-#     ticket = get_object_or_404(Ticket, id=ticket_id)
-#     cart.tickets.remove(ticket)
-#     messages.success(request, 'Ticket removed from cart.')
-#     return redirect('cart')
+    subtotal = sum(ticket.quantity* Decimal(ticket.event.amount) for ticket in tickets)
+    return render(request, 'cart.html', {'tickets': tickets, 'subtotal': subtotal})
+
+@login_required()
+def remove_from_cart(request, ticket_id):
+    cart = get_object_or_404(Cart, user=request.user)
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    cart.tickets.remove(ticket)
+    messages.success(request, 'Ticket removed from cart.')
+    return redirect('cart')
 def my_tickets(request):
     return render(request, 'my_tickets.html')
 

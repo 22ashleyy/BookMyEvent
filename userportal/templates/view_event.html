@@ -32,9 +32,31 @@ bg-light
                 </div>
                 <p>Price per Ticket: KES <span id="price">{{ event.amount }}</span></p>
                 <p id="total">Total: KES 0.00</p>
-                <button type="button" class="btn buy-ticket">Purchase</button>
+                <button href="{% url 'add_to_cart' event.id %}" type="button" class="btn buy-ticket">Purchase</button>
             </div>
         </div>
     </div>
+
+    <!-- Similar Events Section -->
+    <div class="mt-5">
+        <h3>Similar Events</h3>
+        <div class="row">
+            {% for similar_event in similar_events %}
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ similar_event.image.url }}" alt="{{ similar_event.title }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ similar_event.title }}</h5>
+                        <p class="card-text">{{ similar_event.description|truncatewords:20 }}</p>
+                        <a href="{% url 'event_detail' similar_event.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No similar events found.</p>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+
 {% endblock %}
