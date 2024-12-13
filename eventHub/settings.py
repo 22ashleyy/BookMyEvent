@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'eventHub.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bookmyevent_database',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': 'locahost',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
