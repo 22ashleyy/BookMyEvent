@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Payment Failed</h2>
+    <p>{{ message }}</p>
+    <a href="{% url 'cart' %}" class="btn btn-danger">Back to Cart</a>
+</div>
+{% endblock %}

@@ -41,4 +41,5 @@ urlpatterns = [
     path('cart/', views.cart, name='cart'),
     path('my_tickets/', views.my_tickets, name='my_tickets'),
     path('remove_from_cart/<int:ticket_id>/', views.remove_from_cart, name='remove_from_cart'),
+
 ]

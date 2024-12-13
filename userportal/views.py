@@ -1,12 +1,12 @@
+import base64
+import datetime
 import os
 from decimal import Decimal
-from lib2to3.fixes.fix_input import context
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from userportal.forms import eventForm
@@ -21,8 +21,10 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 
+
 def registration(request):
     return render(request, 'registration.html')
+
 
 def dashboard(request):
     if not request.user.is_staff:
@@ -121,6 +123,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
 def delete_user(request, user_id):
     if request.method == 'POST':
         user = User.objects.get(id=user_id)
@@ -143,12 +146,13 @@ def add_to_cart(request, id):
         cart.tickets.add(ticket)
 
     messages.success(request, 'Ticket added to cart.')
-    return redirect('index')
+    return redirect('cart')
 
 @login_required()
 def cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     tickets = cart.tickets.all()
+
     subtotal = sum(ticket.quantity* Decimal(ticket.event.amount) for ticket in tickets)
     return render(request, 'cart.html', {'tickets': tickets, 'subtotal': subtotal})
 
@@ -157,26 +161,9 @@ def remove_from_cart(request, ticket_id):
     cart = get_object_or_404(Cart, user=request.user)
     ticket = get_object_or_404(Ticket, id=ticket_id)
     cart.tickets.remove(ticket)
+    cart.save()
     messages.success(request, 'Ticket removed from cart.')
     return redirect('cart')
+
 def my_tickets(request):
     return render(request, 'my_tickets.html')
-
-def edit_event (request, id):
-    event = get_object_or_404(Event, id=id)
-    if request.method == 'POST':
-        form = eventForm(request.POST, request.FILES, instance=event)
-        if form.is_valid():
-            form.save()
-
-            if 'image' in request.FILES:
-                file_name = os.path.basename(request.FILES['image'].name)
-                messages.success(request, f'Your event and image have been updated! {file_name} uploaded.')
-            else:
-                messages.success(request, 'Your event has been updated successfully!.')
-            return redirect('dashboard')
-        else:
-            messages.error(request, 'Please correct the highlighted errors.')
-    else:
-        form = eventForm(instance=event)
-    return render(request, 'editevent.html', {'form': form, 'event': event})

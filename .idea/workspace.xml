@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eec8d220-5d6e-4dab-a143-3fe3d993ac16" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/userportal/templates/payment_failure.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eventHub/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventHub/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userportal/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/userportal/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userportal/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/userportal/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userportal/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/userportal/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userportal/templates/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/userportal/templates/payment_success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userportal/templates/view_event.html" beforeDir="false" afterPath="$PROJECT_DIR$/userportal/templates/view_event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userportal/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/userportal/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userportal/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/userportal/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +48,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Hp/PycharmProjects/BookMyEvent/static/images&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Hp/Downloads/BookMyEvent-main&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -92,7 +100,10 @@
       <workItem from="1733849116925" duration="1392000" />
       <workItem from="1733860107567" duration="5752000" />
       <workItem from="1733990469596" duration="15273000" />
-      <workItem from="1734064749725" duration="1659000" />
+      <workItem from="1734064749725" duration="5489000" />
+      <workItem from="1734070665710" duration="1735000" />
+      <workItem from="1734072710633" duration="285000" />
+      <workItem from="1734073394033" duration="1695000" />
     </task>
     <servers />
   </component>

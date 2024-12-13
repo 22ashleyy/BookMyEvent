@@ -73,19 +73,19 @@
             <p><strong>Email:</strong> <span>events@info.ac.ke</span></p>
           </div>
           <div class="social-links d-flex mt-4">
-            <a href=""><i class="ri-twitter-x-fill"></i></a>
-            <a href=""><i class="ri-facebook-circle-fill"></i></a>
-            <a href=""><i class="ri-instagram-line"></i></a>
-            <a href=""><i class="ri-linkedin-fill"></i></a>
+            <a href="https://x.com/"><i class="ri-twitter-x-fill"></i></a>
+            <a href="https://www.facebook.com/"><i class="ri-facebook-circle-fill"></i></a>
+            <a href="https://www.instagram.com/?hl=en"><i class="ri-instagram-line"></i></a>
+            <a href="https://www.linkedin.com/"><i class="ri-linkedin-fill"></i></a>
           </div>
         </div>
          <div class="col-lg-2 col-md-3 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Browse events</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'all_events' %}">Browse events</a></li>
             <li><a href="#">My Tickets</a></li>
-            <li><a href="#">Categories</a></li>
+            <li><a href="{% url 'about' %}">About us</a></li>
           </ul>
         </div>
 
@@ -104,9 +104,9 @@
           <p>Subscribe to our newsletter and receive the latest news about our offers and new events!</p>
           <form action="forms/newsletter.php" method="post" class="php-email-form">
             <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+<!--            <div class="loading">Loading</div>-->
+<!--            <div class="error-message"></div>-->
+<!--            <div class="sent-message">Your subscription request has been sent. Thank you!</div>-->
           </form>
         </div>
 

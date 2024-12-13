@@ -32,7 +32,7 @@ bg-light
                 </div>
                 <p>Price per Ticket: KES <span id="price">{{ event.amount }}</span></p>
                 <p id="total">Total: KES 0.00</p>
-                <button href="{% url 'add_to_cart' event.id %}" type="button" class="btn buy-ticket">Purchase</button>
+                <a href="{% url 'add_to_cart' event.id %}" type="button" class="btn buy-ticket">Add to cart</a>
             </div>
         </div>
     </div>

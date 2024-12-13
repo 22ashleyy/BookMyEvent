@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Payment Successful</h2>
+    <p>{{ message }}</p>
+    <a href="{% url 'my_tickets' %}" class="btn btn-primary">View My Tickets</a>
+</div>
+{% endblock %}
